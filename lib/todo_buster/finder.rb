@@ -1,4 +1,6 @@
+require 'active_support/all'
 require 'todo_buster/version'
+require 'todo_buster/configuration'
 require 'todo_buster/todo'
 
 module TodoBuster
@@ -13,17 +15,19 @@ module TodoBuster
       end
 
       todos.each do |todo|
-        puts todos.length
-        puts `git blame -L #{todo.line_number},#{todo.line_number} #{todo.file_name}`.class
+        blame_output = parse_blame_output `git blame -p -L #{todo.line_number},#{todo.line_number} #{todo.file_name}`
+        todo.commit_time = Time.at blame_output['committer-time'].to_i
       end
     end
 
-    def parse_blame_output(blame_output)
-      puts "blame output: #{blame_output}"
-      blame_output_list = blame_output.split
-      date_string = blame_output_list[ (blame_output_list.length-4)..(blame_output_list.length-1) ].join ' '
-      puts date_string
-      Time.new date_string
+    private
+
+    def parse_blame_output(raw_blame_output)
+      blame_output = {}
+      raw_blame_output.split("\n").each do |output_line|
+        blame_output[output_line.split(' ')[0]] = output_line.split(' ')[1]
+      end
+      blame_output
     end
   end
 end

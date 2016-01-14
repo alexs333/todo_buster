@@ -1,5 +1,7 @@
 # TODO Buster
 
+[![Build Status](https://travis-ci.org/alexs333/todo_buster.svg?branch=master)](https://travis-ci.org/alexs333/todo_buster)
+
 Tired of developers adding TODOs in your code that are actually never get done?  Find those using this gem old TODOs and fail the build! 
 This gem can to be included as a part of your continuous integration build or you can run it on add-hock basis.
 

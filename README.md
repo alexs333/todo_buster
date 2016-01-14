@@ -1,8 +1,7 @@
-# TodoBuster
+# TODO Buster
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/todo_buster`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Tired of developers adding TODOs in your code that are actually never get done?  Find those using this gem old TODOs and fail the build! 
+This gem can to be included as a part of your continuous integration build or you can run it on add-hock basis.
 
 ## Installation
 
@@ -22,7 +21,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use simply run:
+
+    $ bust_todos
 
 ## Development
 
@@ -32,10 +33,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/todo_buster.
+Bug reports and pull requests are welcome on GitHub at https://github.com/alexs333/todo_buster.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

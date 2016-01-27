@@ -8,6 +8,7 @@ describe TodoBuster::Todo do
     it { is_expected.to respond_to(:line_number) }
     it { is_expected.to respond_to(:file_name) }
     it { is_expected.to respond_to(:commit_time) }
+    it { is_expected.to respond_to(:committer) }
   end
 
   context 'initialization' do

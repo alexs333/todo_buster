@@ -5,7 +5,6 @@ module TodoBuster
 
   def self.configure
     self.configuration ||= Configuration.new
-    yield configuration if block_given?
   end
 
   class Configuration

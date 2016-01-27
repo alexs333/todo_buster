@@ -5,7 +5,25 @@ require_relative '../lib/todo_buster/configuration'
 
 TodoBuster.configure
 
-puts "valid period is: #{TodoBuster.configuration.valid_period}"
+parser = OptionParser.new do|opts|
+  opts.banner = 'Usage: bust_todos [options]'
+  opts.on('-v n', '--valid-period=n', 'TODO validity period in ActiveSupport format (i.e. 1.day, 2.years etc.)') do |valid_period|
+    begin
+      TodoBuster.configuration.valid_period = eval valid_period
+    rescue
+      puts 'Invalid period'
+      puts opts
+      exit
+    end
+  end
+
+  opts.on('-h', '--help', 'Displays Help') do
+    puts opts
+    exit
+  end
+end
+parser.parse!
 
 finder = TodoBuster::Finder.new
-finder.find_todos
+
+finder.search.length > 0 ? exit(1) : exit(0)

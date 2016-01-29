@@ -9,7 +9,8 @@ parser = OptionParser.new do|opts|
   opts.banner = 'Usage: bust_todos [options]'
   opts.on('-v n', '--valid-period=n', 'TODO validity period in ActiveSupport format (i.e. 1.day, 2.years etc.)') do |valid_period|
     begin
-      TodoBuster.configuration.valid_period = eval valid_period
+      number_of_units, unit_type = valid_period.split '.'
+      TodoBuster.configuration.valid_period = number_of_units.to_i.send unit_type
     rescue
       puts 'Invalid period'
       puts opts

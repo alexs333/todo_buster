@@ -6,6 +6,9 @@
 Tired of developers adding TODOs in your code that are actually never get done?  Find those using this gem old TODOs and fail the build! 
 This gem can to be included as a part of your continuous integration build or you can run it on add-hock basis.
 
+## Requirements
+In order to use the gem, you need to have Git installed.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -43,6 +46,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/alexs3
 * Configuration support for multiple file formats
 * Block exclusions
 * HTML reports
+* Email notifications on pending TODOs
 
 ## License
 

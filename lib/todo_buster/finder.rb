@@ -3,6 +3,8 @@ require 'terminal-table'
 require 'todo_buster/version'
 require 'todo_buster/configuration'
 require 'todo_buster/todo'
+require 'todo_buster/reporters/console_reporter'
+require 'todo_buster/reporters/html_reporter'
 
 module TodoBuster
   class Finder
@@ -34,18 +36,9 @@ module TodoBuster
     end
 
     def print_violations(expired_todos)
-      headings = %w(line file committer)
-
-      todo_violations_table = Terminal::Table.new headings: headings do |t|
-        expired_todos.each do |todo|
-          todo_columns = []
-          todo_columns << todo.line_number
-          todo_columns << todo.file_name
-          todo_columns << todo.committer
-          t << todo_columns
-        end
+      TodoBuster.configuration.reporters.each do |reporter|
+        "TodoBuster::Reporters::#{reporter.humanize}Reporter".constantize.new(expired_todos).generate
       end
-      puts todo_violations_table.to_s
     end
 
     def git_blame(all_todos)

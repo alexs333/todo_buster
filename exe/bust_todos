@@ -1,21 +1,28 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+require 'active_support/all'
 require_relative '../lib/todo_buster/finder'
 require_relative '../lib/todo_buster/configuration'
+require_relative '../lib/todo_buster/configurators/valid_period_configurator'
+require_relative '../lib/todo_buster/configurators/reports_configurator'
+require_relative '../lib/todo_buster/configurators/output_dir_configurator'
 
 TodoBuster.configure
 
 parser = OptionParser.new do|opts|
   opts.banner = 'Usage: bust_todos [options]'
+
   opts.on('-v n', '--valid-period=n', 'TODO validity period in ActiveSupport format (i.e. 1.day, 2.years etc.)') do |valid_period|
-    begin
-      number_of_units, unit_type = valid_period.split '.'
-      TodoBuster.configuration.valid_period = number_of_units.to_i.send unit_type
-    rescue
-      puts 'Invalid period'
-      puts opts
-      exit
-    end
+    TodoBuster::Configurators::ValidPeriodConfigurator.new.apply_config(valid_period) { puts opts }
+  end
+
+  opts.on('-r n', '--reports=n', 'Comma separated list of reports (currently supporting CONSOLE and HTML)') do |reporters|
+    TodoBuster::Configurators::ReportsConfigurator.new.apply_config(reporters) { puts opts }
+  end
+
+  opts.on('-o n', '--output-dir=n', 'Output directory for HTML reports') do |output_dir|
+    TodoBuster::Configurators::OutputDirConfigurator.new.apply_config(output_dir) { puts }
   end
 
   opts.on('-h', '--help', 'Displays Help') do

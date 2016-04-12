@@ -5,6 +5,13 @@ module TodoBuster
 
   def self.configure
     self.configuration ||= Configuration.new
+
+    if File.file? '.todo_buster'
+      File.open('.todo_buster').each_line do |line|
+        option = line.split '='
+        "TodoBuster::Configurators::#{option[0].split('-').map(&:humanize).join}Configurator".constantize.new.apply_config option[1]
+      end
+    end
   end
 
   class Configuration

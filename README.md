@@ -30,6 +30,18 @@ Or install it yourself as:
 To use simply run:
 
     $ bust_todos
+    
+## Configuration
+    
+In addition to command line configuration, the gem can be configured via do file.  Note that command line options
+override configuration file.  In order to configure the gem via config file, place `.todo_buster` file in the root
+directory of your project. Use the following configuration format:
+
+```
+valid-period=1.day
+reports=CONSOLE,HTML
+output-dir=custom/reports
+```
 
 ## Development
 

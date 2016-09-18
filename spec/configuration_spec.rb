@@ -3,6 +3,7 @@ require 'todo_buster/configuration'
 require 'todo_buster/configurators/output_dir_configurator'
 require 'todo_buster/configurators/reports_configurator'
 require 'todo_buster/configurators/valid_period_configurator'
+require 'todo_buster/configurators/file_masks_configurator'
 
 describe TodoBuster::Configuration do
   context 'default' do
@@ -16,7 +17,7 @@ describe TodoBuster::Configuration do
   end
 
   context 'when configuration file is present' do
-    let(:config_file) { "valid-period=1.minute\noutput-dir=todo_output\nreports=HTML" }
+    let(:config_file) { "valid-period=1.minute\noutput-dir=todo_output\nreports=HTML\nfile-masks=*.rb,*.coffee" }
 
     before do
       expect(File).to receive(:file?).with('.todo_buster').at_least(:once).and_return(true)
@@ -34,6 +35,10 @@ describe TodoBuster::Configuration do
       expect(TodoBuster.configuration.output_dir).to eql 'todo_output'
       expect(TodoBuster.configuration.reporters).to include('HTML')
       expect(TodoBuster.configuration.reporters).not_to include('CONSOLE')
+      # expect(TodoBuster.configuration.file_masks).to include('*.rb')
+      # expect(TodoBuster.configuration.file_masks).to include('*.coffee')
+      # expect(TodoBuster.configuration.file_masks).not_to include('*.js')
+      puts TodoBuster.configuration.file_masks
     end
   end
 end

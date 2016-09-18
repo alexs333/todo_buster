@@ -15,12 +15,13 @@ module TodoBuster
   end
 
   class Configuration
-    attr_accessor :valid_period, :reporters, :output_dir
+    attr_accessor :valid_period, :reporters, :output_dir, :file_masks
 
     def initialize
       @valid_period = 1.month
       @reporters = %w(CONSOLE HTML)
       @output_dir = 'todo_reports'
+      @file_masks = %w(*.js *.rb *.coffee)
     end
   end
 end

@@ -7,6 +7,7 @@ require_relative '../lib/todo_buster/configuration'
 require_relative '../lib/todo_buster/configurators/valid_period_configurator'
 require_relative '../lib/todo_buster/configurators/reports_configurator'
 require_relative '../lib/todo_buster/configurators/output_dir_configurator'
+require_relative '../lib/todo_buster/configurators/file_masks_configurator'
 
 TodoBuster.configure
 
@@ -22,7 +23,11 @@ parser = OptionParser.new do|opts|
   end
 
   opts.on('-o n', '--output-dir=n', 'Output directory for HTML reports') do |output_dir|
-    TodoBuster::Configurators::OutputDirConfigurator.new.apply_config(output_dir) { puts }
+    TodoBuster::Configurators::OutputDirConfigurator.new.apply_config(output_dir) { puts opts }
+  end
+
+  opts.on('-f n', '--file-masks=n', 'Comma separated list of file masks to scan') do |file_masks|
+    TodoBuster::Configurators::FileMasksConfigurator.new.apply_config(file_masks) { puts opts }
   end
 
   opts.on('-h', '--help', 'Displays Help') do

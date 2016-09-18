@@ -19,9 +19,11 @@ module TodoBuster
 
     def find_all_todos
       all_todos = []
-      Dir.glob("#{Dir.pwd}/**/*.rb").each do |file|
-        open(file).each_line.with_index(1).inject([]) do |_, i|
-          all_todos << TodoBuster::Todo.new(line_number: i[1], file_name: file) if (i[0][/TODO/])
+      TodoBuster.configuration.file_masks.each do |file_mask|
+        Dir.glob("#{Dir.pwd}/**/#{file_mask}").each do |file|
+          open(file).each_line.with_index(1).inject([]) do |_, i|
+            all_todos << TodoBuster::Todo.new(line_number: i[1], file_name: file) if (i[0][/TODO/])
+          end
         end
       end
       all_todos

@@ -7,6 +7,8 @@ describe TodoBuster::Finder do
     let(:data) { "test\n#TODO: never\ntest\n" }
 
     before do
+      TodoBuster.configure
+      TodoBuster.configuration.file_masks = %w(*.rb)
       expect(Dir).to receive(:glob).with(/\*\*\/\*.rb/).and_return %w(file1.rb)
       expect(finder).to receive(:open).with('file1.rb').and_return StringIO.new(data)
       @todos = finder.send :find_all_todos

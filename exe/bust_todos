@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require_relative '../lib/todo_buster/finder'
 require_relative '../lib/todo_buster/configuration'
 
